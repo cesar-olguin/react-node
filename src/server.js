@@ -1,13 +1,55 @@
 import express from 'express';
+import mysql from 'mysql';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config';
 
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+
+
 const app = express();
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user : 'root',
+    password : 'root',
+    database : 'examen'
+});
+
+
+
+let clientModel = {};
+
+clientModel.getUsers = (callback) => {
+    if (connection){
+        connection.query('SELECT * FROM usuarios ORDER BY id',
+        (err,rows) => {
+            if (err){
+                throw err;
+            }
+            else{
+                callback(null, rows);
+            }
+        }
+    )
+    }
+};
+
+app.get('/cliente', (req,res) => {
+    clientModel.getUsers((err,data)=>{
+        res.status(200).json(data);
+    });
+});
+
+
+
 
 app.set('port',process.env.PORT || 3000);
 
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 
 app.get('/', (req,res) => {
     res.send('Hola');
