@@ -42,9 +42,9 @@ app.get('/api/cliente', (req,res) => {
     });
 });
 
-let compraModel ={};
+let compra68 ={};
 
-compraModel.getUsers = (callback) => {
+compra68.getUsers = (callback) => {
     if (connection){
         connection.query('SELECT * FROM compras WHERE idusuario=68',
         (err,rows) => {
@@ -60,10 +60,57 @@ compraModel.getUsers = (callback) => {
 };
 
 app.get('/api/cliente/68', (req,res) => {
-    compraModel.getUsers((err,data)=>{
+    compra68.getUsers((err,data)=>{
         res.status(200).json(data);
     });
 });
+
+let compra69 ={};
+
+compra69.getUsers = (callback) => {
+    if (connection){
+        connection.query('SELECT * FROM compras WHERE idusuario=69',
+        (err,rows) => {
+            if (err){
+                throw err;
+            }
+            else{
+                callback(null, rows);
+            }
+        }
+    )
+    }
+};
+
+app.get('/api/cliente/69', (req,res) => {
+    compra69.getUsers((err,data)=>{
+        res.status(200).json(data);
+    });
+});
+
+let compra70 ={};
+
+compra70.getUsers = (callback) => {
+    if (connection){
+        connection.query('SELECT * FROM compras WHERE idusuario=70',
+        (err,rows) => {
+            if (err){
+                throw err;
+            }
+            else{
+                callback(null, rows);
+            }
+        }
+    )
+    }
+};
+
+app.get('/api/cliente/70', (req,res) => {
+    compra70.getUsers((err,data)=>{
+        res.status(200).json(data);
+    });
+});
+
 
 
 
