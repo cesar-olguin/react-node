@@ -36,12 +36,34 @@ clientModel.getUsers = (callback) => {
     }
 };
 
-app.get('/cliente', (req,res) => {
+app.get('/api/cliente', (req,res) => {
     clientModel.getUsers((err,data)=>{
         res.status(200).json(data);
     });
 });
 
+let compraModel ={};
+
+compraModel.getUsers = (callback) => {
+    if (connection){
+        connection.query('SELECT * FROM compras WHERE idusuario=68',
+        (err,rows) => {
+            if (err){
+                throw err;
+            }
+            else{
+                callback(null, rows);
+            }
+        }
+    )
+    }
+};
+
+app.get('/api/cliente/68', (req,res) => {
+    compraModel.getUsers((err,data)=>{
+        res.status(200).json(data);
+    });
+});
 
 
 
